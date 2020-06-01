@@ -10,7 +10,7 @@ var MAIN_FONT = 'PT Mono 16px';
 var MAIN_TEXT_COLOR = '#000';
 var BAR_WIDTH = 40;
 var TEXT_HEIGHT = 30;
-var barMaxHeight = 150;
+var BAR_MAX_HEIGHT = 150;
 
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
@@ -53,15 +53,15 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
   for (var i = 0; i < players.length; i++) {
     ctx.fillStyle = '#000';
-    var barHeight = (barMaxHeight * times[i]) / maxTime;
+    var barHeight = (BAR_MAX_HEIGHT * times[i]) / maxTime;
     makeCapture(ctx, players[i], MAIN_FONT, CLOUD_X + BAR_GAP + (BAR_GAP + BAR_WIDTH) * i,
-        CLOUD_Y + GAP * 5 + barMaxHeight + TEXT_HEIGHT, MAIN_TEXT_COLOR);
+        CLOUD_Y + GAP * 5 + BAR_MAX_HEIGHT + TEXT_HEIGHT, MAIN_TEXT_COLOR);
     makeCapture(
         ctx,
         Math.round(times[i]),
         MAIN_FONT,
         CLOUD_X + BAR_GAP + (BAR_GAP + BAR_WIDTH) * i,
-        CLOUD_Y + (barMaxHeight - barHeight) + GAP * 3 + TEXT_HEIGHT,
+        CLOUD_Y + (BAR_MAX_HEIGHT - barHeight) + GAP * 3 + TEXT_HEIGHT,
         MAIN_TEXT_COLOR
     );
 
@@ -74,7 +74,7 @@ window.renderStatistics = function (ctx, players, times) {
     renderBar(
         ctx,
         CLOUD_X + BAR_GAP + (BAR_GAP + BAR_WIDTH) * i,
-        CLOUD_Y + GAP * 4 + (barMaxHeight - barHeight) + TEXT_HEIGHT,
+        CLOUD_Y + GAP * 4 + (BAR_MAX_HEIGHT - barHeight) + TEXT_HEIGHT,
         BAR_WIDTH,
         barHeight
     );
