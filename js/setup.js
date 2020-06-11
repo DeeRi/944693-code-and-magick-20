@@ -58,41 +58,45 @@ setup.querySelector('.setup-similar').classList.remove('hidden');
 // открытие/закрытие окна настройки персонажа
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
-
-var onPopupEscPress = function (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closePopup();
-  }
-};
-
-var openPopup = function () {
-  setup.classList.remove('hidden');
-  // ставим обработчик на док, тк элемент не обязательно должен быть в фокусе
-  document.addEventListener('keydown', onPopupEscPress);
-};
-
-var closePopup = function () {
-  setup.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscPress);
-};
+var userIcon = document.querySelector('.setup-open-icon');
+var nameInput = setup.querySelector('.setup-user-name');
+var sendFormButton = setup.querySelector('.setup-submit');
+var form = document.querySelector('.setup-wizard-form');
 
 setupOpen.addEventListener('click', function () {
-  openPopup();
-});
-
-setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
-    openPopup();
-  }
+  setup.classList.remove('hidden');
 });
 
 setupClose.addEventListener('click', function () {
-  closePopup();
+  setup.classList.add('hidden');
 });
 
-setupClose.addEventListener('keydown', function (evt) {
+userIcon.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
-    closePopup();
+    setup.classList.remove('hidden');
+  }
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Escape' && document.activeElement !== nameInput) {
+    evt.preventDefault();
+    setup.classList.add('hidden');
+  }
+});
+
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter' && document.activeElement === setupClose) {
+    setup.classList.add('hidden');
+  }
+});
+
+sendFormButton.addEventListener('click', function () {
+  form.submit();
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter' && document.activeElement === sendFormButton) {
+    form.submit();
   }
 });
