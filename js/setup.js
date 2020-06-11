@@ -99,9 +99,11 @@ var coatColor = document.querySelector('.setup-wizard .wizard-coat');
 
 var changeWizardColor = function (array, element, isBackground) {
   var newColor = array[getRandomArrayIndex(array)];
-  element.style.fill = newColor;
-  var result = isBackground === true ? element.style.backgroundColor = newColor : element.style.backgroundColor = newColor;
-  return result;
+  if (isBackground === true) {
+    element.style.backgroundColor = newColor;
+  } else {
+    element.style.fill = newColor;
+  }
 };
 
 eyeColor.addEventListener('click', function () {
@@ -117,7 +119,6 @@ fireball.addEventListener('click', function () {
 });
 
 // валидация и отправка формы
-
 var MIN_NAME_LENGTH = 2;
 var MAX_NAME_LENGTH = 25;
 
