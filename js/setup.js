@@ -5,8 +5,6 @@ var coatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)
 var eyeColors = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var setup = document.querySelector('.setup');
-setup.classList.remove('hidden');
-
 var similarListElement = document.querySelector('.setup-similar-list'); /* элемент, в котором будут находиться новые элементы на странице*/
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .content
@@ -56,3 +54,45 @@ var addWizard = function () {
 addWizard(wizards);
 
 setup.querySelector('.setup-similar').classList.remove('hidden');
+
+// открытие/закрытие окна настройки персонажа
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+var onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  // ставим обработчик на док, тк элемент не обязательно должен быть в фокусе
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closePopup();
+  }
+});
