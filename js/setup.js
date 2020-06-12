@@ -1,4 +1,6 @@
 'use strict';
+var MIN_NAME_LENGTH = 2;
+var MAX_NAME_LENGTH = 25;
 var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var coatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
@@ -120,9 +122,9 @@ fireball.addEventListener('click', function () {
 // валидация и отправка формы
 var sendFormButton = setup.querySelector('.setup-submit');
 var form = document.querySelector('.setup-wizard-form');
-var MIN_NAME_LENGTH = 2;
-var MAX_NAME_LENGTH = 25;
 
+
+// пример кода для замены дефолтного сообщения о невалидном input, такая же задача решается через html
 userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
@@ -135,6 +137,7 @@ userNameInput.addEventListener('invalid', function () {
   }
 });
 
+
 userNameInput.addEventListener('input', function () {
   var valueLength = userNameInput.value.length;
   if (valueLength < MIN_NAME_LENGTH) {
@@ -145,6 +148,7 @@ userNameInput.addEventListener('input', function () {
     userNameInput.setCustomValidity('');
   }
 });
+
 
 sendFormButton.addEventListener('click', function () {
   if (userNameInput.validity.valid) {
