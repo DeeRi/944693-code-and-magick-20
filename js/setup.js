@@ -61,8 +61,6 @@ var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
 var userIcon = document.querySelector('.setup-open-icon');
 var userNameInput = setup.querySelector('.setup-user-name');
-var sendFormButton = setup.querySelector('.setup-submit');
-var form = document.querySelector('.setup-wizard-form');
 
 setupOpen.addEventListener('click', function () {
   setup.classList.remove('hidden');
@@ -97,28 +95,31 @@ var fireball = document.querySelector('.setup-fireball-wrap');
 var eyeColor = document.querySelector('.setup-wizard .wizard-eyes');
 var coatColor = document.querySelector('.setup-wizard .wizard-coat');
 
-var changeWizardColor = function (array, element, isBackground) {
+var changeWizardColor = function (array, element, isBackground, id) {
   var newColor = array[getRandomArrayIndex(array)];
   if (isBackground === true) {
     element.style.backgroundColor = newColor;
   } else {
     element.style.fill = newColor;
   }
+  document.getElementById(id).value = newColor;
 };
 
 eyeColor.addEventListener('click', function () {
-  changeWizardColor(eyeColors, eyeColor, false);
+  changeWizardColor(eyeColors, eyeColor, false, 'eyes-color');
 });
 
 coatColor.addEventListener('click', function () {
-  changeWizardColor(coatColors, coatColor, false);
+  changeWizardColor(coatColors, coatColor, false, 'coat-color');
 });
 
 fireball.addEventListener('click', function () {
-  changeWizardColor(fireBallColors, fireball, true);
+  changeWizardColor(fireBallColors, fireball, true, 'fireball-color');
 });
 
 // валидация и отправка формы
+var sendFormButton = setup.querySelector('.setup-submit');
+var form = document.querySelector('.setup-wizard-form');
 var MIN_NAME_LENGTH = 2;
 var MAX_NAME_LENGTH = 25;
 
@@ -136,7 +137,6 @@ userNameInput.addEventListener('invalid', function () {
 
 userNameInput.addEventListener('input', function () {
   var valueLength = userNameInput.value.length;
-
   if (valueLength < MIN_NAME_LENGTH) {
     userNameInput.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) + ' симв.');
   } else if (valueLength > MAX_NAME_LENGTH) {
@@ -147,11 +147,18 @@ userNameInput.addEventListener('input', function () {
 });
 
 sendFormButton.addEventListener('click', function () {
-  form.submit();
+  if (userNameInput.validity.valid) {
+    form.submit();
+  } else {
+    return;
+  }
 });
 
 document.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter' && document.activeElement === sendFormButton) {
+  if (userNameInput.validity.valid && evt.key === 'Enter' && document.activeElement === sendFormButton) {
     form.submit();
+  } else {
+    return;
   }
 });
+
