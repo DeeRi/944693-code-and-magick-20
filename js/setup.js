@@ -34,11 +34,13 @@
 
   window.backend.load(successHandler, errorHandler);
 
+  var onDataSave = function () {
+    setup.classList.add('hidden');
+  };
+
   var form = setup.querySelector('.setup-wizard-form');
   var submitHandler = function (evt) {
-    window.backend.save(new FormData(form), function () {
-      setup.classList.add('hidden');
-    });
+    window.backend.save(new FormData(form), onDataSave, errorHandler);
     evt.preventDefault();
   };
   form.addEventListener('submit', submitHandler);
